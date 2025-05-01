@@ -1,0 +1,39 @@
+---
+# tasks file for roles/common
+
+- name: Update all packages.
+  ansible.builtin.yum:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Install common packages.
+  ansible.builtin.yum:
+    pkg: "{{ common_packages }}"
+    state: present
+
+- name: Generate a local keypair.
+  community.crypto.openssh_keypair:
+    path: "{{ item.key }}"
+  loop: "{{ users }}"
+  delegate_to: localhost
+  become: false
+
+- name: Add a group
+  ansible.builtin.group:
+    name: "{{ item.group }}"
+    state: "{{ item.state }}"
+  loop: "{{ users }}"
+
+- name: Add a user to the group
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    group: "{{ item.group }}"
+    state: "{{ item.state }}"
+  loop: "{{ users }}"
+
+- name: Add key to the remote dirctory of the user.
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', item.key + '.pub') }}"   
+  loop: "{{ users }}" 
