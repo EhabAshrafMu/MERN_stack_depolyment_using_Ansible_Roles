@@ -1,4 +1,4 @@
-MERN Stack Deployment with Ansible
+#MERN Stack Deployment with Ansible#
 This repository contains an Ansible playbook for deploying a basic MERN stack (MongoDB, Express.js, React, Node.js) across two separate servers:
 
 One server hosts the frontend and backend (React + Express/Node.js).
