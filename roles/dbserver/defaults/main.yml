@@ -1,0 +1,12 @@
+---
+# defaults file for roles/dbserver
+mongodb_version: "8.0"
+mongodb_repo_key: "https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc"
+mongodb_repo_key: "https://repo.mongodb.org/yum/redhat/9/mongodb-org/{{ mongodb_version }}"
+mongodb_port: 27017
+mongodb_bind_ip: "0.0.0.0"
+mongodb_config_path: "/etc/mongod.conf"
+mongodb_data_path: "/var/lib/mongo"
+mongodb_root_user: root
+mongodb_root_password: password #ofcourse this isn't best practice. It will be modified later. This is just for learning purposes for now.
+

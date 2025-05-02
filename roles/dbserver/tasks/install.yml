@@ -1,0 +1,43 @@
+- name: Install pip
+  yum:
+    name: python3-pip
+    state: present
+
+- name: Allow pip to install packages globally
+  file:
+    path: /usr/lib/python3.9/EXTERNALLY-MANAGED
+    state: absent
+
+- name: Install PyMongo
+  pip:
+    name: "{{ item }}"
+    state: latest
+    executable: pip3
+  loop:
+    - pymongo
+    - configparser
+
+- name: Add MongoDB repository for RHEL
+  yum_repository:
+    name: mongodb-org
+    description: MongoDB Repository
+    baseurl: "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/{{ mongodb_version }}/x86_64/"
+    gpgcheck: yes
+    gpgkey: "https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc"
+    enabled: yes
+
+- name: update the cache
+  yum:
+    update_cache: true
+
+- name: Install MongoDB packages
+  yum:
+    name: mongodb-org
+    state: present
+
+- name: Start MongoDB and enable it.
+  service:
+    name: mongod
+    state: started
+    enabled: true
+
