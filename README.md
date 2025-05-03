@@ -1,52 +1,49 @@
-#MERN Stack Deployment with Ansible#
-This repository contains an Ansible playbook for deploying a basic MERN stack (MongoDB, Express.js, React, Node.js) across two separate servers:
+# MERN Stack Deployment with Ansible
 
-One server hosts the frontend and backend (React + Express/Node.js).
+This repository contains an Ansible playbook for deploying a basic **MERN stack** (MongoDB, Express.js, React, Node.js) across two separate servers:
 
-The other server hosts the MongoDB database.
+- One server hosts the **frontend and backend** (React + Express/Node.js).
+- The other server hosts the **MongoDB database**.
 
-📁 Repository Structure
-.
+---
+
+## 📁 Repository Structure
+ansible.cfg 
+group_vars # vars folder
 ├── inventory/
-│   └── hosts           # Ansible inventory file (define your server IPs here)
+│ └── hosts # Ansible inventory file (define your server IPs here)
 ├── roles/
-│   ├── webserver/      # Tasks for frontend/backend deployment
-│   └── dbserver/       # Tasks for MongoDB installation and configuration
-├── playbook.yaml       # Main Ansible playbook
-└── README.md           # Documentation
-🚀 Prerequisites
+│ ├── webserver/ # Tasks for frontend/backend deployment
+│ └── dbserver/ # Tasks for MongoDB installation and configuration
+├── playbook.yaml # Main Ansible playbook
+└── README.md # Documentation
+
+---
+
+## 🚀 Prerequisites
+
 Before running the playbook, ensure the following:
 
-Two Linux servers (recommended: RHEL or Ubuntu)
+- Two Linux servers (e.g., RHEL or Ubuntu)
+- Passwordless SSH access from the Ansible control node to both servers
+- Ansible installed on the control node
+- Python and `sudo` installed on both target servers
 
-Passwordless SSH access from your Ansible control node to both servers
+---
 
-Ansible installed on the control node
+## 🔧 Configuration
 
-Python and sudo installed on both target servers
+### 1. Inventory File
 
-🔧 Configuration
-1. Inventory File
-Edit inventory/hosts and add your server IPs under the appropriate groups:
+Edit `inventory/hosts` and add your server IPs under the appropriate groups:
 
-ini
-Copy
-Edit
+```ini
 [webserver]
 192.168.1.100
 
 [dbserver]
 192.168.1.101
-2. Variables (Optional)
-You can define custom variables in group_vars/ or host_vars/ to override default settings like:
 
-MongoDB data path
-
-Application ports
-
-Domain names
-
-Environment variables
 
 📦 Deployment
 Step 1: Clone the Repository
@@ -55,20 +52,25 @@ Copy
 Edit
 git clone https://github.com/your-username/mern-ansible-deployment.git
 cd mern-ansible-deployment
-Step 2: Update Inventory
-Edit inventory/hosts and enter the IPs of your frontend/backend server and database server.
+Step 2: Update the Inventory File
+Edit inventory/hosts with your actual server IPs.
 
 Step 3: Run the Playbook
 bash
 Copy
 Edit
 ansible-playbook -i inventory/hosts playbook.yaml
-This will install Node.js, MongoDB, and deploy your application automatically.
+This command installs Node.js, MongoDB, and deploys the MERN stack on your servers.
 
 📎 Notes
-Ensure that your application is properly configured to connect to MongoDB using the database server’s IP address.
+Ensure your backend is configured to connect to MongoDB using the database server’s internal IP.
 
-Authentication and firewalls are not preconfigured—make sure to secure your servers for production use.
+This setup is intended for development or internal use. For production, consider adding:
 
-You may want to set up SSL/TLS and reverse proxy (e.g., NGINX) for real-world deployments.
+Firewall rules
 
+Authentication
+
+SSL/TLS
+
+NGINX reverse proxy
