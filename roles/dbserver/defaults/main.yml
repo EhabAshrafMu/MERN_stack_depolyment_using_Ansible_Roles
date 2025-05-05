@@ -8,5 +8,11 @@ mongodb_bind_ip: "0.0.0.0"
 mongodb_config_path: "/etc/mongod.conf"
 mongodb_data_path: "/var/lib/mongo"
 mongodb_root_user: root
-mongodb_root_password: password #ofcourse this isn't best practice. It will be modified later. This is just for learning purposes for now.
-
+  #You can overwrite this value with your own value. It's best practice to use encryption by Ansible Vault.
+mongodb_root_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62666637626339383736373330633035653362333138313838366333633834326239666139323037
+          3734353830303166653265623264306633356464623838310a343032323561646236343432656462
+          34336431356164646439336331636534646463656137336137636366316637303331363365336232
+          6261393462386166610a393934616461383063316235626632633365643635633030363861613738
+          6630
